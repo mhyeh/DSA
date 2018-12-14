@@ -39,3 +39,15 @@ def MillerRabinTest(p, k=5):
         k -= 1
         
     return True
+
+# primeList = [2,3,5,7]
+
+# def Primes():
+#     for p in primeList:
+#         yield p
+#     while 1:
+#         p += 2
+#         while not MillerRabinTest(p):
+#             p += 2
+#         primeList.append(p)
+#         yield p

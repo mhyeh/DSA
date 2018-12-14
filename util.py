@@ -1,4 +1,5 @@
 import hashlib
+import time
 
 def H(m):
     hashF = hashlib.sha1()
@@ -34,30 +35,3 @@ def GCD(a, b):
     while b != 0:
         a, b = b, a % b
     return a
-
-def Ord(a, n):
-    assert GCD(a, n) == 1
-    result, k = 1, 1
-    while k < n:
-        # result = (result * a) % n
-        # if result == 1:
-        #     return k
-        if SQandMU(a, k, n) == 1:
-            return k
-        k += 1
-
-def largest_factor_relatively_prime(a, b):
-    while 1:
-        d = GCD(a, b)
-        if d <= 1:
-            break
-        b = d
-        while 1:
-            q, r = divmod(a, d)
-            if r > 0:
-                break
-        a = q
-    return a
-    
-def LargeOrd(a, n):
-    return Ord(a, largest_factor_relatively_prime(n, a))
