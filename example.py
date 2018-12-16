@@ -33,7 +33,7 @@ if __name__ == '__main__':
             g = int(input("Please enter a G(base 16): "), 16)
             r = int(input("Please enter a R(base 16): "), 16)
             s = int(input("Please enter a S(base 16): "), 16)
-            key = int(input("Please enter your key(base 16): "), 16)
+            pubKey = int(input("Please enter your key(base 16): "), 16)
             print("Result", DSA.Verify(m, p, q, g, pubKey, r, s))
         else:
             break
