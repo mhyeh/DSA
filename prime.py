@@ -3,6 +3,7 @@ import random
 import util
 
 def PrimeGenerator(n):
+    # 質數展生
     step = math.floor(math.log2(n) / 2)
     while True:
         x = random.getrandbits(n - 2) << 1
@@ -11,6 +12,7 @@ def PrimeGenerator(n):
             return x
 
 def MillerRabinTest(p, k=5):
+    # 質數測試
     if p == 2:
         return True
     if not(p & 1):

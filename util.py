@@ -2,6 +2,7 @@ import hashlib
 import time
 
 def H(m):
+    # hash
     hashF = hashlib.sha1()
     hashF.update(str(m).encode('utf-8'))
     hashMessage = hashF.hexdigest()

@@ -4,6 +4,7 @@ import prime
 import util
 
 def KeyGenerator(bit = 1024):
+    # key 的生成
     flag = False
     while not flag:
         c = 0
@@ -17,6 +18,7 @@ def KeyGenerator(bit = 1024):
             c += 1
             if (c >= 100):
                 break
+            # 防止 q 太難導致 p 找不到
             
     h = 2
     while util.SQandMU(h, (p - 1) // q, p) == 1:
@@ -27,12 +29,14 @@ def KeyGenerator(bit = 1024):
     return (p, q, g), pubKey, priKey
 
 def Sign(m, p, q, g, priKey):
+    # 簽章
     r, s = 0, 0
     while 1:
         k = random.randrange(1, q)
         r = util.SQandMU(g, k, p) % q
         if (r == 0):
             continue
+            # 發生R=0的情況，試另一組k
         dk = util.ModInv(k, q)
         s = (dk * (util.H(m) + priKey * r)) % q
         if (s != 0):
@@ -40,6 +44,7 @@ def Sign(m, p, q, g, priKey):
     return r, s
 
 def Verify(m, p, q, g, pubKey, r, s):
+    # 驗證簽章
     assert r >= 0 and r < q and s >= 0 and s < q
     w  = util.ModInv(s, q)
     u1 = (util.H(m) * w) % q
