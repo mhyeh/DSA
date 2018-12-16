@@ -4,12 +4,20 @@ import prime
 import util
 
 def KeyGenerator(bit = 1024):
-    q = prime.PrimeGenerator(160)
-    while 1:
-        k = random.getrandbits(bit - 160)
-        p = k * q + 1
-        if (p.bit_length() == bit and prime.MillerRabinTest(p)):
-            break
+    flag = False
+    while not flag:
+        c = 0
+        q = prime.PrimeGenerator(160)
+        while 1:
+            k = random.getrandbits(bit - 160)
+            p = k * q + 1
+            if (p.bit_length() == bit and prime.MillerRabinTest(p)):
+                flag = True
+                break
+            c += 1
+            if (c >= 100):
+                break
+            
     h = 2
     while util.SQandMU(h, (p - 1) // q, p) == 1:
         h  = random.randrange(2, p - 1)
