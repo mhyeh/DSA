@@ -4,11 +4,14 @@ import prime
 import util
 
 def KeyGenerator(bit = 1024):
-    # key 的生成
+    # Generate 2 large prime p, q, (p - 1) % q == 0
     flag = False
     while not flag:
         c = 0
-        q = prime.PrimeGenerator(160)
+        q = prime.PrimeGenerator(160) # q is 160 bits
+
+        # (p - 1) % q == 0 --> p = q * k + 1
+        # p is 1024 bits (default) --> k is (1024 - 160) bits
         while 1:
             k = random.getrandbits(bit - 160)
             p = k * q + 1
@@ -16,16 +19,19 @@ def KeyGenerator(bit = 1024):
                 flag = True
                 break
             c += 1
+
+            # 可能因為 q 的關係導致很難找到 p ，所以如果一段時間找不到 p ，就換一個 q 試試看
             if (c >= 100):
                 break
-            # 防止 q 太難導致 p 找不到
             
+    # Generate g, such that multiplicative order modulo p of g is q
     h = 2
     while util.SQandMU(h, (p - 1) // q, p) == 1:
         h  = random.randrange(2, p - 1)
     g      = util.SQandMU(h, (p - 1) // q, p)
-    priKey = random.randrange(1, q)
-    pubKey = util.SQandMU(g, priKey, p)
+
+    priKey = random.randrange(1, q)     # Grnerate private key
+    pubKey = util.SQandMU(g, priKey, p) # Generate public key = g ^ priKey % q
     return (p, q, g), pubKey, priKey
 
 def Sign(m, p, q, g, priKey):

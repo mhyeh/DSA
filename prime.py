@@ -3,16 +3,19 @@ import random
 import util
 
 def PrimeGenerator(n):
-    # 質數展生
-    step = math.floor(math.log2(n) / 2)
+    step = math.floor(math.log2(n) / 2) # 要檢查 n bits 的數是否為質數，要做 Miller Rabin Test log2(n) / 2 次
     while True:
+        # 產生 n bits 質數的方法:
+        # step1: 第 n 個 bit 跟第 1 個 bit 是 1
+        # step2: 其他 bit random 產生
+        # step3: Miller Rabin Test 檢查是否為質數
         x = random.getrandbits(n - 2) << 1
         x += 1 + (1 << (n - 2))
         if MillerRabinTest(x, step):
             return x
 
 def MillerRabinTest(p, k=5):
-    # 質數測試
+    # 偶數只有 2 是質數
     if p == 2:
         return True
     if not(p & 1):
