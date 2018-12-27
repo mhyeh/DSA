@@ -5,6 +5,7 @@ import util
 
 def KeyGenerator(bit = 1024):
     # Generate 2 large prime p, q, (p - 1) % q == 0
+    print("Generate...")
     flag = False
     while not flag:
         c = 0
